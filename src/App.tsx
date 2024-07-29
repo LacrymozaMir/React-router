@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GlobalStyles from './styles/global'
-import {BrowserRouter, Route} from 'react-router-dom';
-import Home from './pages/Home';
-import Users from './pages/Users';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import Navbar from './components/Navbar';
+import AppRouter from './components/AppRouter';
+import { AuthContext } from './context';
 
 const App = () => {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  
   return (
-    <>
+    <AuthContext.Provider value={{
+      isAuth,
+      setIsAuth
+    }}>
       <BrowserRouter>
-          <Route path="/" exact>
-            <Home/>
-          </Route>
-          <Route path="/users">
-            <Users/>
-          </Route>
+        <Navbar/>
+        <AppRouter/>
+
       </BrowserRouter>
 
       <GlobalStyles/>
-    </>
+    </AuthContext.Provider>
   )
 }
 
