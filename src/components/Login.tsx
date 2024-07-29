@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
     const Auth = useContext(AuthContext);
-    const history = useHistory();
+    const history = useNavigate();
 
     const login = (e: React.MouseEvent) => {
         e.preventDefault();
         Auth?.setIsAuth(true);
         localStorage.setItem('auth', 'true');
-        history.push('/');
+        history('/');
     }
 
 

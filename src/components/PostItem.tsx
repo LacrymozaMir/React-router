@@ -1,7 +1,7 @@
 import React from 'react'
 import { IPost } from '../types/posts'
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Post = styled.div`
     margin: 8px;
@@ -19,14 +19,14 @@ interface IPostItem {
 }
 
 const PostItem: React.FC<IPostItem> = ({post}) => {
-    const router = useHistory();
+    const router = useNavigate();
 
 
   return (
     <Post>
       <PostTitle>{post.id}.{post.title}</PostTitle>
       <p>{post.title}</p>
-      <button onClick={() => router.push(`/posts/${post.id}`)}>Open</button>
+      <button onClick={() => router(`/posts/${post.id}`)}>Open</button>
     </Post>
   )
 }

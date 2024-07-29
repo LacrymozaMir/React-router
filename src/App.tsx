@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import GlobalStyles from './styles/global'
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import AppRouter from './components/AppRouter';
 import { AuthContext } from './context';

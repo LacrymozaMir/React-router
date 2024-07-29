@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { RouteComponentProps, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { IComment, IPost } from '../types/posts';
 import { getById, getCommentsByPostId } from '../api/postsApi';
 import CommentsItem from '../components/CommentsItem';
+import { error } from 'console';
 
 interface RouteParams {
-    id: string;
+    [key: string]: string;
 }
 
 
@@ -15,16 +16,22 @@ const PostIdPage: React.FC = () => {
     const [comments, setComments] = useState<IComment[]>([]);
 
     useEffect(() => {
+      if(params.id) {
         getPost();
         getComments();
-    }, []);
+      }
+    }, [params.id]);
 
     const getPost = async () => {
+      if (params.id) {
         setPost(await getById(params.id));
+      } else console.log();
     }
 
     const getComments = async () => {
+      if (params.id) {
         setComments(await getCommentsByPostId(params.id));
+      } else console.log();
     }
 
     return (
@@ -33,7 +40,7 @@ const PostIdPage: React.FC = () => {
       <div>{post?.title}</div>
       <div>{post?.body}</div>
       {comments.map(comment => 
-        <CommentsItem comment={comment}/>
+        <CommentsItem key={comment.id} comment={comment}/>
       )}
     </div>
   )
