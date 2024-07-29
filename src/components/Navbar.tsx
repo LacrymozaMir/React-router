@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context';
 
 const NavbarContainer = styled.nav`
     height: 50px;
@@ -33,8 +34,18 @@ interface ILink {
 
 
 const Navbar: React.FC = () => {
+  const Auth = useContext(AuthContext);
+
+  const logout = () => {
+    Auth?.setIsAuth(false);
+    localStorage.removeItem('auth');
+  }
+
   return (
     <NavbarContainer>
+      {Auth?.isAuth && 
+        <button onClick={logout}>Выйти</button>
+      }
       <NavbarLinks>
         <Link to="/"><NavbarItem>Home</NavbarItem></Link>
         <Link to="/posts"><NavbarItem>Posts</NavbarItem></Link>
