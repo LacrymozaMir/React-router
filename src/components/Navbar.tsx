@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context';
+import { NavLink } from 'react-router-dom';
 
 const NavbarContainer = styled.nav`
     height: 50px;
@@ -35,6 +36,11 @@ interface ILink {
 
 const Navbar: React.FC = () => {
   const Auth = useContext(AuthContext);
+  const location = useLocation();
+  
+  useEffect(() => {
+    console.log(location.pathname);
+  }, []);
 
   const logout = () => {
     Auth?.setIsAuth(false);
@@ -47,8 +53,20 @@ const Navbar: React.FC = () => {
         <button onClick={logout}>Выйти</button>
       }
       <NavbarLinks>
-        <Link to="/"><NavbarItem>Home</NavbarItem></Link>
-        <Link to="/posts"><NavbarItem>Posts</NavbarItem></Link>
+        <Link to="/">
+          <NavbarItem>
+            <span style={location.pathname === '/' ? {backgroundColor: 'gray'} : {backgroundColor: ''}}>
+              Home
+            </span>
+          </NavbarItem>
+        </Link>
+        <NavLink to="/posts">
+          <NavbarItem>
+            <span style={location.pathname === '/posts' ? {backgroundColor: 'gray'} : {backgroundColor: ''}}>
+              Posts
+            </span>
+          </NavbarItem>
+        </NavLink>
       </NavbarLinks>
     </NavbarContainer>
   )
